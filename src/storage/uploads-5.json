@@ -638,9 +638,9 @@
   "RepaymentUploads": [
     {
       "CustomerID": 1,
-      "SeasonID": 180,
+      "SeasonID": 0,
       "Date": "3/3/2016",
-      "Amount": 7000
+      "Amount": 800
     }
   ]
 }

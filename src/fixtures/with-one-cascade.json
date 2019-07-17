@@ -110,7 +110,7 @@
       "CustomerID": 1,
       "SeasonID": 110,
       "Credit": 7900,
-      "TotalRepaid": 4500
+      "TotalRepaid": 7900
     },
     {
       "CustomerID": 2,
@@ -644,4 +644,3 @@
     }
   ]
 }
-

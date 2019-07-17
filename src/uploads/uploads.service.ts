@@ -8,6 +8,8 @@ import { CustomerInterface } from './interfaces/customer.interface';
 import { Customer } from './entities/customer.entity';
 import { CustomerSummaryInterface } from './interfaces/customerSummary.interface';
 import { CustomerSummary } from './entities/customer.summary.entity';
+import { RepaymentUploadInterface } from './interfaces/repaymentUploads.interface';
+import { CustomerRepayment } from './entities/customer.repayment.entity';
 
 @Injectable()
 export class UploadsService implements UploadServiceInterface {
@@ -18,6 +20,8 @@ export class UploadsService implements UploadServiceInterface {
     private readonly customerRepository: Repository<Customer>,
     @InjectRepository(CustomerSummary)
     private readonly summaryRepository: Repository<CustomerSummary>,
+    @InjectRepository(CustomerRepayment)
+    private readonly customerRepayment: Repository<CustomerRepayment>,
   ) {}
 
   async handle(fileId: number): Promise<void> {
@@ -25,30 +29,129 @@ export class UploadsService implements UploadServiceInterface {
     // await this.persistSeasons(file.Seasons);
     // await this.persistCustomers(file.Customers);
     await this.persistCustomerSummaries(file.CustomerSummaries);
+    await this.makeRepayments(file.RepaymentUploads);
   }
+
+  private async makeRepayments(repayments: RepaymentUploadInterface[]) {
+    const firstRepayment = repayments[0];
+    setTimeout(async () => {
+      const customerSummary = await this.summaryRepository.find({
+        where: { Customer: firstRepayment.CustomerID },
+        relations: ['Customer', 'Season'],
+      });
+      try {
+        this.payCustomerSeasons(
+          customerSummary,
+          firstRepayment.SeasonID,
+          Number(firstRepayment.Amount),
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }, 5000);
+  }
+
+  //!-------------------- Helper Methods for Repayment ---------------------
+  private payCustomerSeasons(
+    customerSummary: CustomerSummary[],
+    seasonId: number,
+    repaymentAmount: number,
+    payment = 0,
+  ) {
+    const nextPaymentSeason = this.calculateNextPaymentSeason(
+      customerSummary,
+      seasonId,
+      payment,
+    );
+
+    const paymentSeason =
+      seasonId != 0 ? seasonId : nextPaymentSeason.Season.SeasonID;
+
+    const seasonPayment = customerSummary.find(
+      summary => summary.Season.SeasonID === paymentSeason,
+    );
+
+    const seasonPaymentBalance =
+      Number(seasonPayment.Credit) - Number(seasonPayment.TotalRepaid);
+
+    if (seasonPaymentBalance > repaymentAmount) {
+      return this.makeTransaction(
+        repaymentAmount,
+        paymentSeason,
+        seasonPayment,
+      );
+    }
+
+    if (seasonPaymentBalance > 0 && seasonPaymentBalance < repaymentAmount) {
+      this.makeTransaction(repaymentAmount, paymentSeason, seasonPayment);
+      this.makeTransaction(
+        seasonPaymentBalance - repaymentAmount,
+        paymentSeason,
+        seasonPayment,
+      );
+
+      return this.payCustomerSeasons(
+        customerSummary,
+        nextPaymentSeason.Season.SeasonID,
+        repaymentAmount - seasonPaymentBalance,
+        payment + 1,
+      );
+    }
+  }
+
+  private calculateNextPaymentSeason(
+    customerSummary: CustomerSummary[],
+    seasonId: number,
+    payment: number,
+  ) {
+    return this.sortBySeasonAsc(
+      customerSummary.filter(summary => summary.Season.SeasonID != seasonId),
+    )[payment];
+  }
+
+  private sortBySeasonAsc(customerSummary: CustomerSummary[]) {
+    return customerSummary.sort(summary => -summary.Season.SeasonID);
+  }
+
+  private makeTransaction(
+    repaymentAmount: number,
+    seasonId: number,
+    seasonPayment: CustomerSummary,
+  ) {
+    console.log(
+      `Paying ${repaymentAmount} for ${seasonId} Season for ${seasonPayment.Customer.CustomerID}`,
+    );
+    console.log(
+      `Editing Summary for ${seasonId} Season for ${seasonPayment.Customer.CustomerID}`,
+    );
+  }
+
+  //! -------------------------------------------------------//
 
   private async persistCustomerSummaries(
     summaries: CustomerSummaryInterface[],
   ) {
-    summaries.forEach(async summary => {
-      try {
-        const customerSummary = new CustomerSummary();
-        customerSummary.Credit = summary.Credit;
-        customerSummary.TotalRepaid = summary.TotalRepaid;
-        customerSummary.Customer = await this.customerRepository.findOne(
-          summary.CustomerID,
-        );
-        customerSummary.Season = await this.seasonRepository.findOne(
-          summary.SeasonID,
-        );
+    try {
+      await this.summaryRepository.clear();
+    } catch (e) {
+      console.error(e);
+    }
 
-        const savedSummaries = await this.summaryRepository.save(
-          customerSummary,
-        );
-        console.log(savedSummaries);
-      } catch (e) {
-        console.error(e);
-      }
+    return summaries.map(async summary => {
+      const customerSummary = new CustomerSummary();
+      customerSummary.Credit = summary.Credit;
+      customerSummary.TotalRepaid = summary.TotalRepaid;
+      customerSummary.Customer = await this.customerRepository.findOne(
+        summary.CustomerID,
+      );
+      customerSummary.Season = await this.seasonRepository.findOne(
+        summary.SeasonID,
+      );
+
+      const savedSummary = await this.summaryRepository.save(customerSummary);
+      if (savedSummary.SummaryID === summaries.length)
+        console.log('Saved Customer Summaries...');
+      return savedSummary;
     });
   }
 
