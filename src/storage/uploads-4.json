@@ -110,7 +110,7 @@
       "CustomerID": 1,
       "SeasonID": 110,
       "Credit": 7900,
-      "TotalRepaid": 4500
+      "TotalRepaid": 7500
     },
     {
       "CustomerID": 2,
@@ -176,7 +176,7 @@
       "CustomerID": 1,
       "SeasonID": 120,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 5800
     },
     {
       "CustomerID": 2,
@@ -242,7 +242,7 @@
       "CustomerID": 1,
       "SeasonID": 130,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 2,
@@ -638,9 +638,9 @@
   "RepaymentUploads": [
     {
       "CustomerID": 1,
-      "SeasonID": 180,
+      "SeasonID": 0,
       "Date": "3/3/2016",
-      "Amount": 7000
+      "Amount": 1900
     }
   ]
 }

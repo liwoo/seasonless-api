@@ -110,13 +110,13 @@
       "CustomerID": 1,
       "SeasonID": 110,
       "Credit": 7900,
-      "TotalRepaid": 7500
+      "TotalRepaid": 7000
     },
     {
       "CustomerID": 2,
       "SeasonID": 110,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 5400
     },
     {
       "CustomerID": 3,
@@ -128,13 +128,13 @@
       "CustomerID": 4,
       "SeasonID": 110,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 5,
       "SeasonID": 110,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 3400
     },
     {
       "CustomerID": 7,
@@ -146,7 +146,7 @@
       "CustomerID": 8,
       "SeasonID": 110,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 5000
     },
     {
       "CustomerID": 9,
@@ -158,13 +158,13 @@
       "CustomerID": 10,
       "SeasonID": 110,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 4600
     },
     {
       "CustomerID": 11,
       "SeasonID": 110,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 2000
     },
     {
       "CustomerID": 12,
@@ -176,55 +176,55 @@
       "CustomerID": 1,
       "SeasonID": 120,
       "Credit": 6200,
-      "TotalRepaid": 5800
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 2,
       "SeasonID": 120,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 4300
     },
     {
       "CustomerID": 3,
       "SeasonID": 120,
       "Credit": 7050,
-      "TotalRepaid": 7050
+      "TotalRepaid": 0
     },
     {
       "CustomerID": 4,
       "SeasonID": 120,
       "Credit": 7050,
-      "TotalRepaid": 7000
+      "TotalRepaid": 0
     },
     {
       "CustomerID": 5,
       "SeasonID": 120,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 3200
     },
     {
       "CustomerID": 7,
       "SeasonID": 120,
       "Credit": 5250,
-      "TotalRepaid": 5250
+      "TotalRepaid": 2950
     },
     {
       "CustomerID": 8,
       "SeasonID": 120,
       "Credit": 6950,
-      "TotalRepaid": 6950
+      "TotalRepaid": 300
     },
     {
       "CustomerID": 9,
       "SeasonID": 120,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 0
     },
     {
       "CustomerID": 10,
       "SeasonID": 120,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 600
     },
     {
       "CustomerID": 11,
@@ -247,7 +247,7 @@
     {
       "CustomerID": 2,
       "SeasonID": 130,
-      "Credit": 6200,
+      "Credit": 0,
       "TotalRepaid": 6200
     },
     {
@@ -260,7 +260,7 @@
       "CustomerID": 4,
       "SeasonID": 130,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 800
     },
     {
       "CustomerID": 5,
@@ -296,7 +296,7 @@
       "CustomerID": 11,
       "SeasonID": 130,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 12,
@@ -320,7 +320,7 @@
       "CustomerID": 3,
       "SeasonID": 140,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 4,
@@ -356,7 +356,7 @@
       "CustomerID": 10,
       "SeasonID": 140,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 6000
     },
     {
       "CustomerID": 11,
@@ -374,7 +374,7 @@
       "CustomerID": 1,
       "SeasonID": 150,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 0
     },
     {
       "CustomerID": 2,
@@ -530,7 +530,7 @@
       "CustomerID": 5,
       "SeasonID": 170,
       "Credit": 6200,
-      "TotalRepaid": 6200
+      "TotalRepaid": 5500
     },
     {
       "CustomerID": 7,
@@ -554,7 +554,7 @@
       "CustomerID": 10,
       "SeasonID": 170,
       "Credit": 4500,
-      "TotalRepaid": 4500
+      "TotalRepaid": 4000
     },
     {
       "CustomerID": 11,
@@ -640,8 +640,67 @@
       "CustomerID": 1,
       "SeasonID": 0,
       "Date": "3/3/2016",
-      "Amount": 1900
+      "Amount": 4000
+    },
+    {
+      "CustomerID": 2,
+      "SeasonID": 170,
+      "Date": "3/4/2016",
+      "Amount": 5000
+    },
+    {
+      "CustomerID": 3,
+      "SeasonID": 0,
+      "Date": "3/5/2016",
+      "Amount": 5500
+    },
+    {
+      "CustomerID": 4,
+      "SeasonID": 130,
+      "Date": "3/6/2016",
+      "Amount": 6000
+    },
+    {
+      "CustomerID": 5,
+      "SeasonID": 180,
+      "Date": "3/7/2016",
+      "Amount": 6000
+    },
+    {
+      "CustomerID": 7,
+      "SeasonID": 180,
+      "Date": "3/8/2016",
+      "Amount": 800
+    },
+    {
+      "CustomerID": 8,
+      "SeasonID": 0,
+      "Date": "3/9/2016",
+      "Amount": 500
+    },
+    {
+      "CustomerID": 9,
+      "SeasonID": 0,
+      "Date": "3/10/2016",
+      "Amount": 14000
+    },
+    {
+      "CustomerID": 10,
+      "SeasonID": 110,
+      "Date": "3/11/2016",
+      "Amount": 4000
+    },
+    {
+      "CustomerID": 11,
+      "SeasonID": 0,
+      "Date": "3/12/2016",
+      "Amount": 1000
+    },
+    {
+      "CustomerID": 12,
+      "SeasonID": 180,
+      "Date": "3/13/2016",
+      "Amount": 500
     }
   ]
 }
-

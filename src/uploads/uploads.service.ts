@@ -33,39 +33,47 @@ export class UploadsService implements UploadServiceInterface {
   }
 
   private async makeRepayments(repayments: RepaymentUploadInterface[]) {
-    const firstRepayment = repayments[0];
-    setTimeout(async () => {
-      const customerSummary = await this.summaryRepository.find({
-        where: { Customer: firstRepayment.CustomerID },
-        relations: ['Customer', 'Season'],
-      });
-      try {
-        this.payCustomerSeasons(
-          customerSummary,
-          firstRepayment.SeasonID,
-          Number(firstRepayment.Amount),
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }, 5000);
+    repayments.forEach(repayment => {
+      setTimeout(async () => {
+        const customerSummary = await this.summaryRepository.find({
+          where: { Customer: repayment.CustomerID },
+          relations: ['Customer', 'Season'],
+        });
+        try {
+          this.payCustomerSeasons(
+            customerSummary,
+            repayment.SeasonID === 0
+              ? this.getFirstSeason()
+              : repayment.SeasonID,
+            Number(repayment.Amount),
+          );
+        } catch (e) {
+          console.error(e);
+        }
+      }, 2000);
+    });
+  }
+
+  private getFirstSeason(): number {
+    return 110;
   }
 
   //!-------------------- Helper Methods for Repayment ---------------------
   private payCustomerSeasons(
     customerSummary: CustomerSummary[],
-    seasonId: number,
+    paymentSeason: number,
     repaymentAmount: number,
     payment = 0,
   ) {
     const nextPaymentSeason = this.calculateNextPaymentSeason(
       customerSummary,
-      seasonId,
+      paymentSeason,
       payment,
     );
 
-    const paymentSeason =
-      seasonId != 0 ? seasonId : nextPaymentSeason.Season.SeasonID;
+    // console.log(nextPaymentSeason);
+    // const paymentSeason =
+    //   seasonId !== 0 ? seasonId : nextPaymentSeason.Season.SeasonID;
 
     const seasonPayment = customerSummary.find(
       summary => summary.Season.SeasonID === paymentSeason,
@@ -105,7 +113,7 @@ export class UploadsService implements UploadServiceInterface {
     payment: number,
   ) {
     return this.sortBySeasonAsc(
-      customerSummary.filter(summary => summary.Season.SeasonID != seasonId),
+      customerSummary.filter(summary => summary.Season.SeasonID !== seasonId),
     )[payment];
   }
 
